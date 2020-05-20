@@ -2,10 +2,6 @@ package ru.ifmo.collections;
 
 
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.IntFunction;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 /**
  * Represents sorted set of unique values.
@@ -55,84 +51,8 @@ public final class SortedSet<T> extends AbstractSet<T> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends T> c) {
-        boolean hasChanged = false;
-        for (var item : c) {
-            if (add(item)) {
-                hasChanged = true;
-            }
-        }
-        return hasChanged;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        boolean isInContents = contents.containsKey(o);
-        if (isInContents) {
-            contents.remove(o);
-        }
-        return isInContents;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        boolean hasChanged = false;
-        for (var item : c) {
-            if (remove(item)) {
-                hasChanged = true;
-            }
-        }
-        return hasChanged;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return contents.isEmpty();
-    }
-
-    @Override
-    public boolean contains(Object o) {
-        return contents.containsKey(o);
-    }
-
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        return contents.keySet().containsAll(c);
-    }
-
-    @Override
     public Iterator<T> iterator() {
         return contents.keySet().iterator();
-    }
-
-    @Override
-    public void forEach(Consumer<? super T> action) {
-        contents.keySet().forEach(action);
-    }
-
-    @Override
-    public <T1> T1[] toArray(IntFunction<T1[]> generator) {
-        return contents.keySet().toArray(generator);
-    }
-
-    @Override
-    public boolean removeIf(Predicate<? super T> filter) {
-        return contents.keySet().removeIf(filter);
-    }
-
-    @Override
-    public Spliterator<T> spliterator() {
-        return contents.keySet().spliterator();
-    }
-
-    @Override
-    public Stream<T> stream() {
-        return contents.keySet().stream();
-    }
-
-    @Override
-    public Stream<T> parallelStream() {
-        return contents.keySet().parallelStream();
     }
 
     @Override
