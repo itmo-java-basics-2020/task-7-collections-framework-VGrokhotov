@@ -1,6 +1,5 @@
 package ru.ifmo.collections;
 
-import java.util.Collections;
 import java.util.TreeSet;
 import java.util.Set;
 
@@ -13,45 +12,31 @@ import java.util.Set;
  */
 public class KthLargest {
 
-    private Set<Node> numbers = new TreeSet<>(Collections.reverseOrder());
+    //multiset
+    private Set<Integer> numbers = new TreeSet<>((first, second) -> {
+        int compareResult = Integer.compare(second, first);
+        if (compareResult == 0) {
+            return -1;
+        } else {
+            return compareResult;
+        }
+    });
+
     private int k;
 
     public KthLargest(int k, int[] numbers) {
         this.k = k;
         for (int number : numbers) {
-            this.numbers.add(new Node(number));
+            this.numbers.add(number);
         }
     }
 
     public int add(int val) {
-        numbers.add(new Node(val));
+        numbers.add(val);
         if (numbers.size() < k) {
             return -1;
         }
-        return ((Node) numbers.toArray()[k - 1]).getValue();
-    }
-
-    private static class Node implements Comparable<Node> {
-
-        private int value;
-
-        public Node(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        @Override
-        public int compareTo(Node o) {
-            int compareResult = Integer.compare(value, o.value);
-            if (compareResult == 0) {
-                return -1;
-            } else {
-                return compareResult;
-            }
-        }
+        return (int) numbers.toArray()[k - 1];
     }
 }
 
